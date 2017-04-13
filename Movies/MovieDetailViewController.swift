@@ -139,7 +139,7 @@ class MovieDetailViewController : UIViewController, UITableViewDelegate {
         let tokenParameter : String = (delegate.user?.token) ?? "NO_TOKEN"
         let parameters : Parameters = ["token": tokenParameter]
         
-        let baseUrl :String = "http://localhost:8081"
+        let baseUrl :String = "http://localhost:8080"
         let requestPath :String = "/movies/\(movieItem.id!)"
         
         Alamofire.request(baseUrl.appending(requestPath), method: .get, parameters : parameters, encoding: URLEncoding.queryString).validate().responseJSON { response in

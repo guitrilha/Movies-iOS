@@ -93,7 +93,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             "userName" : login.userName,
             "password" : login.password
         ]
-        let requestUrl = "http://localhost:8081/register"
+        let requestUrl = "http://localhost:8080/register"
         
         Alamofire.request(requestUrl, method: .post, parameters: requestParameters, encoding: JSONEncoding.default).validate().responseJSON { response in
             switch response.result {
