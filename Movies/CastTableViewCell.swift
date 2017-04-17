@@ -10,22 +10,9 @@ import UIKit
 
 class CastTableViewCell: UITableViewCell {
     
-    
     //MARK: Properties
     @IBOutlet weak var actorNameLabel: UILabel!
     @IBOutlet weak var characterNameLabel: UILabel!
-    
-    var actorName: String = "" {
-        didSet{
-            actorNameLabel.text = actorName
-        }
-    }
-
-    var characterName: String = "" {
-        didSet{
-            characterNameLabel.text = characterName
-        }
-    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,6 +23,11 @@ class CastTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
+    }
+
+    func setFieldValue(role : Role){
+        actorNameLabel.text = role.actorName ?? ""
+        characterNameLabel.text = role.characterName ?? ""
     }
     
 }

@@ -11,18 +11,14 @@ import UIKit
 class MovieItemAdapter: BaseTableViewAdapter<MovieItem> {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Table view cells are reused and should be dequeued using a cell identifier.
         let cellIdentifier = "MovieTableViewCell"
-        
+
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? MovieTableViewCell  else {
             fatalError("The dequeued cell is not an instance of MovieTableViewCell.")
         }
         
-        // Fetches the appropriate meal for the data source layout.
         let movie = itens[indexPath.row]
-        
-        cell.movieName = movie.name ?? ""
-        cell.movieDescription = movie.description ?? ""
+        cell.setFieldValue(movieItem: movie)
         
         return cell
     }

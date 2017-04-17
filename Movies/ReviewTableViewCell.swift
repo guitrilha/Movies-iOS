@@ -10,23 +10,9 @@ import UIKit
 
 class ReviewTableViewCell: UITableViewCell {
     
-    
     //MARK: Properties
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
-    
-    var userName: String = "" {
-        didSet{
-            userNameLabel.text = userName
-        }
-    }
-    
-    var reviewDescription: String = "" {
-        didSet{
-            descriptionLabel.text = reviewDescription
-        }
-    }
-
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -38,5 +24,10 @@ class ReviewTableViewCell: UITableViewCell {
         
         // Configure the view for the selected state
     }
-    
+
+    func setFieldValue(review : Review){
+        userNameLabel.text = review.userName ?? ""
+        descriptionLabel.text = review.description ?? ""
+    }
+
 }

@@ -10,22 +10,9 @@ import UIKit
 
 class MovieTableViewCell: UITableViewCell {
 
-    
     //MARK: Properties
     @IBOutlet weak var movieNameLabel: UILabel!
     @IBOutlet weak var movieDescriptionLabel: UILabel!
-
-    var movieName: String = "" {
-        didSet{
-            movieNameLabel.text = movieName
-        }
-    }
-    
-    var movieDescription: String = "" {
-        didSet{
-            movieDescriptionLabel.text = movieDescription
-        }
-    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,6 +23,11 @@ class MovieTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
+    }
+
+    func setFieldValue(movieItem: MovieItem){
+        movieNameLabel.text = movieItem.name ?? ""
+        movieDescriptionLabel.text = movieItem.description ?? ""
     }
     
 }

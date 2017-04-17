@@ -24,7 +24,6 @@ class ReviewAdapter: BaseTableViewAdapter<Review> {
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Table view cells are reused and should be dequeued using a cell identifier.
         let cellIdentifier = "ReviewTableViewCell"
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ReviewTableViewCell  else {
@@ -32,9 +31,7 @@ class ReviewAdapter: BaseTableViewAdapter<Review> {
         }
 
         let review = itens[indexPath.row]
-        
-        cell.userName = review.userName ?? ""
-        cell.reviewDescription = review.description ?? ""
+        cell.setFieldValue(review : review)
 
         hideLastItemSeparator(indexPath: indexPath, cell: cell)
         resizeTableView()
