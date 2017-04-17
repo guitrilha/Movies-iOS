@@ -1,5 +1,5 @@
 //
-//  ReviewDataSource.swift
+//  CastAdapter.swift
 //  Movies
 //
 //  Created by Guilherme Trilha on 05/04/17.
@@ -7,22 +7,26 @@
 //
 
 import UIKit
-class ReviewDataSource : BaseDataSource<Review> {
-    
+class CastAdapter : BaseTableViewAdapter<Role> {
+
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Table view cells are reused and should be dequeued using a cell identifier.
-        let cellIdentifier = "ReviewTableViewCell"
+        let cellIdentifier = "CastTableViewCell"
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ReviewTableViewCell  else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? CastTableViewCell  else {
             fatalError("The dequeued cell is not an instance of ReviewTableViewCell.")
         }
         
         // Fetches the appropriate meal for the data source layout.
-        let review = itens[indexPath.row]
+        let role = itens[indexPath.row]
         
-        cell.userName = review.userName ?? ""
-        cell.reviewDescription = review.description ?? ""
+        cell.actorName = role.actorName ?? ""
+        cell.characterName = role.characterName ?? ""
+
+        hideLastItemSeparator(indexPath: indexPath, cell: cell)
+        resizeTableView()
+
         return cell
     }
-
 }

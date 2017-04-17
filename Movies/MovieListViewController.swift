@@ -1,4 +1,4 @@
-a//
+//
 //  MovieListViewController.swift
 //  Movies
 //
@@ -11,10 +11,10 @@ import UIKit
 import Alamofire
 import ObjectMapper
 
-class MovieListViewController : UITableViewController, MovieItemCallback{
+class MovieListViewController : UITableViewController{
 
     let delegate = UIApplication.shared.delegate as! AppDelegate
-    var movieItemDataSource : MovieItemDataSource!
+    var movieItemDataSource : MovieItemAdapter!
     
     var presenter : MovieListPresenter!
     
@@ -23,7 +23,7 @@ class MovieListViewController : UITableViewController, MovieItemCallback{
         
         preparePresenter()
         
-        movieItemDataSource = MovieItemDataSource(callback: self)
+        movieItemDataSource = MovieItemAdapter(tableView: tableView)
         
         prepareTableView()
     }
@@ -34,9 +34,8 @@ class MovieListViewController : UITableViewController, MovieItemCallback{
     }
     
     private func prepareTableView(){
+        tableView.delegate = movieItemDataSource
         tableView.dataSource = movieItemDataSource
-        tableView.estimatedRowHeight = 100
-        tableView.rowHeight = UITableViewAutomaticDimension
     }
     
     public func fillIn(movies: [MovieItem]){
@@ -69,12 +68,4 @@ class MovieListViewController : UITableViewController, MovieItemCallback{
         }
         
     }
-    
-    func onMovieItensLoaded(){
-        self.tableView.reloadData()
-    }
-    
-    
-    //MARK: Private Methods
-    
  }

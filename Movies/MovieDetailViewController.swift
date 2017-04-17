@@ -11,7 +11,7 @@ import UIKit
 import Alamofire
 import ObjectMapper
 
-class MovieDetailViewController : UIViewController, UITableViewDelegate {
+class MovieDetailViewController : UIViewController, UITableViewDelegate, ReviewClickListener {
 
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
@@ -19,22 +19,25 @@ class MovieDetailViewController : UIViewController, UITableViewDelegate {
     
     @IBOutlet weak var reviewsTable: UITableView!
     @IBOutlet weak var castTable: UITableView!
+
     @IBOutlet weak var reviewsTableHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var castTableHeightConstraint: NSLayoutConstraint!
     
     let delegate = UIApplication.shared.delegate as! AppDelegate
     
     
-    var castDataSource : CastDataSource!
-    var reviewsDataSource = ReviewDataSource()
+    var castAdapter: CastAdapter!
+    var reviewAdapter: ReviewAdapter!
     
     var movieItem : MovieItem?
     
     var movie = Movie(){
         didSet{
-            reviewsDataSource.setItens(itens: (movie?.reviews)!)
+            reviewAdapter.setItens(itens: [Review]())
             reviewsTable.reloadData()
-            castDataSource.setItens(itens: (movie?.cast)!)
+            reviewAdapter.setItens(itens: (movie?.reviews)!)
+            reviewsTable.reloadData()
+            castAdapter.setItens(itens: (movie?.cast)!)
             castTable.reloadData()
         }
     }
@@ -72,19 +75,17 @@ class MovieDetailViewController : UIViewController, UITableViewDelegate {
 
     
     override func viewDidLoad() {
-        castDataSource = CastDataSource()
-        
+
         navigationItem.title = movieItem?.name
-        
-        reviewsTable.delegate = self
-        reviewsTable.dataSource = reviewsDataSource
-        reviewsTable.estimatedRowHeight = 100
-        reviewsTable.rowHeight = UITableViewAutomaticDimension
-        
-        castTable.delegate = self
-        castTable.dataSource = castDataSource
-        castTable.estimatedRowHeight = 100
-        castTable.rowHeight = UITableViewAutomaticDimension
+
+        reviewAdapter = ReviewAdapter(listener: self, tableView: reviewsTable, heightConstraint: reviewsTableHeightConstraint)
+        reviewsTable.delegate = reviewAdapter
+        reviewsTable.dataSource = reviewAdapter
+
+        castAdapter = CastAdapter(tableView: castTable, heightConstraint: castTableHeightConstraint)
+        castTable.delegate = castAdapter
+        castTable.dataSource = castAdapter
+
         loadMovie(movieItem: movieItem!)
         
         segmentedControl.selectedSegmentIndex = 0
@@ -159,5 +160,9 @@ class MovieDetailViewController : UIViewController, UITableViewDelegate {
             print("Didn`t get movie as JSON from API")
             return
         }
+    }
+
+    func onReviewClicked(review : Review){
+        print(review.description)
     }
 }

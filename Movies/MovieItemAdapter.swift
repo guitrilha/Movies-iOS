@@ -8,20 +8,8 @@
 
 import UIKit
 
-class MovieItemDataSource : BaseDataSource<MovieItem> {
-   
-    
-    var callback : MovieItemCallback!
-    
-    init(callback: MovieItemCallback) {
-        self.callback = callback
-    }
-    
-    public func setCallback(callback: MovieItemCallback){
-        self.callback = callback
-    }
-    
-    
+class MovieItemAdapter: BaseTableViewAdapter<MovieItem> {
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Table view cells are reused and should be dequeued using a cell identifier.
         let cellIdentifier = "MovieTableViewCell"
@@ -38,8 +26,4 @@ class MovieItemDataSource : BaseDataSource<MovieItem> {
         
         return cell
     }
-}
-
-protocol MovieItemCallback {
-    func onMovieItensLoaded()
 }
